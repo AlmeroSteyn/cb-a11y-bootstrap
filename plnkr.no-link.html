@@ -1,0 +1,1607 @@
+<html lang="en"><head></head><body><form id="mainForm" method="post" action="http://plnkr.co/edit/?p=preview" target="_self"><input type="hidden" name="files[app/a11y-index.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+import {ROUTER_DIRECTIVES} from &quot;@angular/router-deprecated&quot;;
+
+@Component({
+    selector: 'a11y-index',
+    templateUrl: './app/a11y-index.component.html',
+    directives: [ROUTER_DIRECTIVES]
+})
+export class A11yIndexComponent{
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/app.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+import {ROUTER_DIRECTIVES, RouteConfig, ROUTER_PROVIDERS} from &quot;@angular/router-deprecated&quot;;
+import {A11yFormControlsComponent} from &quot;./form-controls/a11y-form-controls.component&quot;;
+import {A11yIndexComponent} from &quot;./a11y-index.component&quot;;
+import {A11yHelperService} from &quot;./services/a11y-helper.service&quot;;
+import {A11yManagingFocusComponent} from &quot;./managing-focus/a11y-managing-focus.component&quot;;
+import {A11yComponentRolesComponent} from &quot;./component-roles/a11y-component-roles.component&quot;;
+import {A11yDevToolsComponent} from &quot;./dev-tools/a11y-dev-tools.component&quot;;
+import {Router} from &quot;@angular/router-deprecated&quot;;
+
+@Component({
+  selector: 'app',
+  templateUrl: 'app/app.component.html',
+  directives:[
+    ROUTER_DIRECTIVES
+  ],
+  providers: [
+    ROUTER_PROVIDERS,
+    A11yHelperService
+  ]
+})
+@RouteConfig([
+  {path:'/', name: 'Index', component: A11yIndexComponent},
+  {path:'/form-controls', name: 'FormControls', component: A11yFormControlsComponent},
+  {path:'/managing-focus', name: 'ManagingFocus', component: A11yManagingFocusComponent},
+  {path:'/component-roles', name: 'ComponentRoles', component: A11yComponentRolesComponent},
+  {path:'/dev-tools/...', name: 'DevTools', component: A11yDevToolsComponent}
+])
+export class AppComponent {
+
+  constructor(private _router: Router){
+  }
+
+  isIndex():boolean {
+    let instruction = this._router.generate(['Index']);
+    return this._router.isRouteActive(instruction);
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/component-roles/a11y-component-roles.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+import {A11yHelperService} from &quot;../services/a11y-helper.service&quot;;
+import {A11yCustomControlComponent} from &quot;../shared/a11y-custom-control.component&quot;;
+import {A11yValueHelperComponent} from &quot;../shared/a11y-value-helper.component&quot;;
+import {A11yCustomButtonComponent} from &quot;../shared/a11y-custom-button.component&quot;;
+
+@Component({
+  selector: 'a11y-component-roles',
+  templateUrl: './app/component-roles/a11y-component-roles.component.html',
+  directives: [
+    A11yCustomControlComponent,
+    A11yValueHelperComponent,
+    A11yCustomButtonComponent
+  ]
+})
+export class A11yComponentRolesComponent {
+
+  inputDivModel: string = '';
+  buttonClicks: number = 0;
+
+  constructor(private _a11yHelper: A11yHelperService){}
+
+  onClick():void {
+    this.buttonClicks++;
+  }
+
+  generateSkiplink(hash:string){
+    return this._a11yHelper.getInternalLink(hash, 'ComponentRoles');
+  }
+
+  generateButtonString(): string{
+    return `Button has been clicked ${this.buttonClicks} times`;
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/dev-tools/a11y-dev-tools-index.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+import {ROUTER_DIRECTIVES} from &quot;@angular/router-deprecated&quot;;
+
+@Component({
+  selector: 'a11y-dev-tools-index',
+  templateUrl: './app/dev-tools/a11y-dev-tools-index.component.html',
+  directives: [ROUTER_DIRECTIVES]
+})
+export class A11yDevToolsIndexComponent {
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/dev-tools/a11y-dev-tools.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+import {RouteConfig, ROUTER_DIRECTIVES} from &quot;@angular/router-deprecated&quot;;
+import {A11yFailsComponent} from &quot;./a11y-fails/a11y-fails.component&quot;;
+import {A11yPassComponent} from &quot;./a11y-pass/a11y-pass.component&quot;;
+import {A11yDevToolsIndexComponent} from &quot;./a11y-dev-tools-index.component&quot;;
+
+@Component({
+  selector: 'a11y-dev-tools',
+  templateUrl: './app/dev-tools/a11y-dev-tools.component.html',
+  directives: [ROUTER_DIRECTIVES]
+
+})
+@RouteConfig([
+  {path: '/', name: 'A11yDevToolsIndex', component: A11yDevToolsIndexComponent, useAsDefault: true},
+  {path: '/fail-demo', name: 'A11yFails', component: A11yFailsComponent},
+  {path: '/pass-demo', name: 'A11yPass', component: A11yPassComponent}
+])
+export class A11yDevToolsComponent{
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/dev-tools/a11y-fails/a11y-fails.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-fails',
+  templateUrl: './app/dev-tools/a11y-fails/a11y-fails.component.html',
+  styles: [
+    `
+      input {
+      font-weight: bold;
+      }
+      
+      label {
+      color: #808080;
+      }
+     `
+  ]
+})
+export class A11yFailsComponent {
+
+  hideSuccessConfirmation:boolean = true;
+
+  submit():void {
+    this.hideSuccessConfirmation = false;
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/dev-tools/a11y-pass/a11y-pass.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-fails',
+  templateUrl: './app/dev-tools/a11y-pass/a11y-pass.component.html'
+})
+export class A11yPassComponent {
+
+  hideSuccessConfirmation: boolean =  true;
+
+  submit(messageElement: any):void{
+    this.hideSuccessConfirmation = false;
+    setTimeout(() => {
+      messageElement.focus();
+    }, 200);
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/form-controls/a11y-form-controls.component.ts]" value="import {Component, OnInit} from &quot;@angular/core&quot;;
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from &quot;@angular/common&quot;;
+import {A11yHelperService} from &quot;../services/a11y-helper.service&quot;;
+import {A11yInputWrapperComponent} from &quot;./a11y-input-wrapper.component&quot;;
+import {A11yValueHelperComponent} from &quot;../shared/a11y-value-helper.component&quot;;
+import {A11yCustomControlComponent} from &quot;../shared/a11y-custom-control.component&quot;;
+
+@Component({
+  selector: 'a11y-form-controls',
+  templateUrl: './app/form-controls/a11y-form-controls.component.html',
+  directives: [
+    CORE_DIRECTIVES,
+    FORM_DIRECTIVES,
+    A11yCustomControlComponent,
+    A11yInputWrapperComponent,
+    A11yValueHelperComponent
+  ]
+})
+export class A11yFormControlsComponent implements OnInit {
+
+  checkBoxes:any;
+  radioButtons:any;
+  selectOptions:any;
+
+  inputModel:string;
+  inputExplicitModel: string;
+  inputWrappedModel: string;
+  inputWrappedSaveModel:string = '';
+  inputDivModel: string = '';
+  textModel:string;
+  selectModel: string = 'Curiosity';
+  searchModel: string;
+  filterModel: string;
+
+  radioModel:string = 'TypeScript';
+  checkboxModel:Array<string> = [&quot;Observables&quot;, &quot;Components&quot;];
+
+
+  constructor(private _a11yHelper:A11yHelperService) {
+  }
+
+  generateSkiplink(hash:string){
+    return this._a11yHelper.getInternalLink(hash, 'FormControls');
+  }
+
+  isChecked(item:string):boolean {
+    return this._a11yHelper.isStringInArray(this.checkboxModel, item);
+  }
+
+  toggleCheckbox(item:string):void {
+    this._a11yHelper.toggleItemInArray(this.checkboxModel, item);
+  }
+
+  onSave(){
+    this.inputWrappedSaveModel = this.inputWrappedModel;
+  }
+
+  ngOnInit() {
+    this.checkBoxes = this._a11yHelper.getCheckboxModel();
+    this.radioButtons = this._a11yHelper.getRadiobuttonsModel();
+    this.selectOptions = this._a11yHelper.getSelectOptions();
+  }
+
+  updateSelect(value: string):void{
+    this.selectModel = value;
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/form-controls/a11y-input-wrapper.component.ts]" value="import {Component, Output, EventEmitter} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-input-wrapper',
+  templateUrl: './app/form-controls/a11y-input-wrapper.component.html',
+  styleUrls: ['./app/form-controls/a11y-input-wrapper.component.css']
+})
+export class A11yInputWrapperComponent{
+
+  @Output() onSave: EventEmitter<any> = new EventEmitter();
+
+  save(){
+    this.onSave.emit(null);
+  }
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/main.ts]" value="import {bootstrap}    from '@angular/platform-browser-dynamic';
+import {AppComponent} from &quot;./app.component&quot;;
+
+bootstrap(AppComponent);
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/managing-focus/a11y-error-demo.component.ts]" value="import {Component} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-error-demo',
+  templateUrl: './app/managing-focus/a11y-error-demo.component.html'
+})
+export class A11yErrorDemoComponent {
+
+  hideErrorConfirmation:boolean = true;
+
+  setFocusOn(element: any) {
+    this.hideErrorConfirmation = false;
+    setTimeout(() => {
+      element.focus();
+    }, 200);
+  }
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/managing-focus/a11y-managing-focus.component.ts]" value="import {Component, OnInit} from &quot;@angular/core&quot;;
+import {A11yHelperService} from &quot;../services/a11y-helper.service&quot;;
+import {CORE_DIRECTIVES} from &quot;@angular/common&quot;;
+import {A11yErrorDemoComponent} from &quot;./a11y-error-demo.component&quot;;
+import {A11yCustomButtonComponent} from &quot;../shared/a11y-custom-button.component&quot;;
+import {A11yValueHelperComponent} from &quot;../shared/a11y-value-helper.component&quot;;
+
+@Component({
+  selector: 'a11y-managing-focus',
+  templateUrl: './app/managing-focus/a11y-managing-focus.component.html',
+  directives: [
+    CORE_DIRECTIVES,
+    A11yCustomButtonComponent,
+    A11yValueHelperComponent,
+    A11yErrorDemoComponent
+  ]
+})
+export class A11yManagingFocusComponent implements OnInit{
+
+  countriesWorkedIn: Array<string>;
+  buttonClicks: number = 0;
+
+  constructor(private _a11yHelper:A11yHelperService) {
+  }
+
+  generateSkiplink(hash:string) {
+    return this._a11yHelper.getInternalLink(hash, 'ManagingFocus');
+  }
+
+  onClick():void {
+    this.buttonClicks++;
+  }
+
+  generateButtonString(): string{
+    return `Button has been clicked ${this.buttonClicks} times`;
+  }
+
+  ngOnInit():void{
+    this.countriesWorkedIn = this._a11yHelper.getCountriesWorkedIn()
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/services/a11y-helper.service.ts]" value="import {Injectable} from &quot;@angular/core&quot;;
+import {Router} from &quot;@angular/router-deprecated&quot;;
+
+@Injectable()
+export class A11yHelperService {
+
+  constructor(private _router: Router){}
+
+  getInternalLink(hash: string, instructionName: string): string{
+    let instruction = this._router.generate([instructionName]);
+    let path = '/' +  instruction.toUrlPath() + hash;
+    return path;
+  }
+
+  generateUniqueIdString():string {
+    return (this.randomGuidSnippet() +
+    this.randomGuidSnippet() + &quot;-&quot; +
+    this.randomGuidSnippet() + &quot;-4&quot; +
+    this.randomGuidSnippet().substr(0, 3) + &quot;-&quot; +
+    this.randomGuidSnippet() + &quot;-&quot; +
+    this.randomGuidSnippet() +
+    this.randomGuidSnippet() +
+    this.randomGuidSnippet()).toLowerCase();
+  }
+
+  getCheckboxModel():any {
+    return [
+      {
+        name: 'Template syntax',
+        value: 'Template syntax'
+      },
+      {
+        name: 'Observables',
+        value: 'Observables'
+      },
+      {
+        name: 'Components',
+        value: 'Components'
+      },
+      {
+        name: 'Forms',
+        value: 'Forms'
+      }
+    ];
+  }
+
+  getRadiobuttonsModel():any {
+    return [
+      {
+        name: 'TypeScript',
+        value: 'TypeScript'
+      },
+      {
+        name: 'JavaScript',
+        value: 'JavaScript'
+      },
+      {
+        name: 'ES6',
+        value: 'ES6'
+      },
+      {
+        name: 'Dart',
+        value: 'Dart'
+      }
+    ];
+  }
+
+  getSelectOptions():any {
+    return [
+      {
+        name: 'Curiosity',
+        value: 'Curiosity'
+      },
+      {
+        name: 'Increased userbase',
+        value: 'Increased userbase'
+      },
+      {
+        name: 'Legal reasons',
+        value: 'Legal reasons'
+      }
+    ];
+  }
+
+  getCountriesWorkedIn():Array<string>{
+    return ['The USA', 'The Netherlands', 'South Africa', 'Germany', 'The UK'];
+  }
+
+  toggleItemInArray(stringArray:Array<string>, item:string): void {
+    var entryIndex = stringArray.indexOf(item);
+    if (entryIndex != -1) {
+      stringArray.splice(entryIndex, 1);
+    } else {
+      stringArray.push(item);
+    }
+  }
+
+  isStringInArray(stringArray: Array<string>, item: string): boolean {
+    return stringArray.indexOf(item.toString()) != -1;
+  }
+
+  removeHtmlStringBreaks(inputValue: string):string{
+    return inputValue.replace(new RegExp('<div>', 'g'), '')
+      .replace(new RegExp('</div>', 'g'), '\n')
+      .replace(new RegExp('<br>', 'g'), '')
+  }
+
+  private randomGuidSnippet():string {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  }
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/shared/a11y-custom-button.component.ts]" value="import {Component, EventEmitter, Output} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-custom-button',
+  templateUrl: './app/shared/a11y-custom-button.component.html',
+  host: {
+    'role': 'button',
+    'tabindex': '0',
+    'class': 'btn btn-primary',
+    '(keydown.space)': 'onKeyDown()',
+    '(keydown.enter)': 'onKeyDown()'
+  }
+})
+export class A11yCustomButtonComponent {
+
+  @Output() click:EventEmitter<any> = new EventEmitter();
+
+  onKeyDown() {
+    this.click.emit(null);
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/shared/a11y-custom-control.component.ts]" value="import {Component, OnInit, Provider, forwardRef,} from &quot;@angular/core&quot;;
+import {A11yHelperService} from &quot;../services/a11y-helper.service&quot;;
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from &quot;@angular/common&quot;;
+
+const noop = () => {
+};
+
+const A11Y_CUSTOM_CONTROL_VALUE_ACCESSOR = new Provider(
+  NG_VALUE_ACCESSOR, {
+    useExisting: forwardRef(() => A11yCustomControlComponent),
+    multi: true
+  });
+
+@Component({
+  selector: 'a11y-custom-control',
+  templateUrl: './app/shared/a11y-custom-control.component.html',
+  styleUrls: ['./app/shared/a11y-custom-control.component.css'],
+  providers: [A11Y_CUSTOM_CONTROL_VALUE_ACCESSOR]
+})
+export class A11yCustomControlComponent implements OnInit, ControlValueAccessor {
+
+  uniqueId:string;
+
+  private innerValue:any = '';
+  outerValue:string = '';
+
+  private onTouchedCallback:() => void = noop;
+  private onChangeCallback:(_:any) => void = noop;
+
+  constructor(private _a11yHelper:A11yHelperService) {
+  }
+
+  onChange(event:any, value:string) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+    }
+    else {
+      this.innerValue = this._a11yHelper.removeHtmlStringBreaks(value);
+      this.onChangeCallback(this.innerValue);
+    }
+  }
+
+  onBlur(){
+    this.onTouchedCallback();
+  }
+
+  writeValue(value:any) {
+    if (value != this.innerValue) {
+      this.innerValue = value;
+      this.outerValue = value;
+    }
+  }
+
+  registerOnChange(fn:any) {
+    this.onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn:any) {
+    this.onTouchedCallback = fn;
+  }
+
+  ngOnInit():void {
+    this.uniqueId = this._a11yHelper.generateUniqueIdString();
+  }
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/shared/a11y-value-helper.component.ts]" value="import {Component, Input} from &quot;@angular/core&quot;;
+
+@Component({
+  selector: 'a11y-value-helper',
+  templateUrl: './app/shared/a11y-value-helper.component.html',
+  styles: [`
+    .value-label {
+      position:relative;
+      top: -15px;
+    }
+`]
+})
+export class A11yValueHelperComponent {
+
+  @Input() displayValue:any;
+
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[a11y.css]" value="label {
+  color: #424242;
+  width: 100%;
+}
+
+hr {
+  border-top: 3px double #8c8b8b;
+}
+
+h3 {
+  outline: 0;
+}
+
+.hide-element {
+  display: none !important;
+}
+
+.btn {
+  margin-bottom: 15px;
+}
+
+.background-contrast {
+  background-color: #0143A3;
+  color: #fff;
+}
+
+nav a:visited, a:link {
+  color: darkblue;
+}
+
+.label-default {
+  background-color: #3F3F3F;
+}
+
+.skiplink {
+  min-height: 20px;
+}
+
+.skiplink a {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  color: darkblue;
+}
+
+.skiplink a:active,
+.skiplink a:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+
+
+.custom-outline:focus {
+  border-color: #7F0037;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(127, 0, 55, .6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(127, 0, 55, .6);
+}
+
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+
+.like-bootstrap {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/form-controls/a11y-input-wrapper.component.css]" value=":host input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+:host input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/shared/a11y-custom-control.component.css]" value="div.edit-box{
+  height: auto;
+  min-height: 50px;
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[styles.css]" value="/* Master Styles */
+h1 {
+  color: #369; 
+  font-family: Arial, Helvetica, sans-serif;   
+  font-size: 250%;
+}
+h2, h3 { 
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;   
+  font-weight: lighter;
+}
+body { 
+  margin: 2em; 
+}
+body, input[text], button { 
+  color: #888; 
+  font-family: Cambria, Georgia; 
+}
+a {
+  cursor: pointer;
+  cursor: hand;
+}
+button {
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #aaa; 
+  cursor: auto;
+}
+
+/* Navigation link styles */
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.router-link-active {
+  color: #039be5;
+}
+
+/* items class */
+.items {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 24em;
+}
+.items li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+}
+.items li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.items li.selected:hover {
+  background-color: #BBD8DC;
+  color: white;
+}
+.items .text {
+  position: relative;
+  top: -3px;
+}
+.items {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 24em;
+}
+.items li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+}
+.items li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.items li.selected {
+  background-color: #CFD8DC;
+  color: white;
+}
+
+.items li.selected:hover {
+  background-color: #BBD8DC;
+}
+.items .text {
+  position: relative;
+  top: -3px;
+}
+.items .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #607D8B;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+
+/* everywhere else */
+* { 
+  font-family: Arial, Helvetica, sans-serif; 
+}
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[app/a11y-index.component.html]" value="<nav role=&quot;navigation&quot;>
+  <ol>
+    <li>
+      <a [routerLink]=&quot;['FormControls']&quot;><h2>Accessible form control labels</h2></a>
+    </li>
+    <li>
+      <a [routerLink]=&quot;['ManagingFocus']&quot;><h2>Managing focus</h2></a>
+    </li>
+    <li>
+      <a [routerLink]=&quot;['ComponentRoles']&quot;><h2>Roles for custom component widgets</h2></a>
+    </li>
+    <li>
+      <a [routerLink]=&quot;['DevTools']&quot;><h2>Developer tools</h2></a>
+    </li>
+  </ol>
+</nav>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/app.component.html]" value="<header role=&quot;banner&quot; class=&quot;jumbotron well text-center background-contrast&quot;>
+  <h1 id=&quot;top&quot;>Angular 2 A11y Cookbook</h1>
+</header>
+<main role=&quot;main&quot; class=&quot;container&quot;>
+  <router-outlet></router-outlet>
+  <a *ngIf=&quot;!isIndex()&quot; [routerLink]=&quot;['Index']&quot;>Back to main index...</a>
+</main>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/component-roles/a11y-component-roles.component.html]" value="<nav role=&quot;navigation&quot; class=&quot;skiplink&quot;>
+  <a [href]=&quot;generateSkiplink('#templateroles')&quot; >Go directly to roles in the template</a>
+  <a [href]=&quot;generateSkiplink('#hostroles')&quot;>Go directly roles of the host element</a>
+</nav>
+
+<article role=&quot;article&quot;>
+  <header class=&quot;row well&quot;>
+    <h2>Roles for custom component widgets</h2>
+  </header>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;templateroles&quot; tabindex=&quot;-1&quot;>Roles in the template</h3>
+      <hr>
+    </header>
+
+    <a11y-custom-control [(ngModel)]=&quot;inputDivModel&quot;>
+      I set the role in my template:
+    </a11y-custom-control>
+
+    <a11y-value-helper [displayValue]=&quot;inputDivModel&quot;></a11y-value-helper>
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;hostroles&quot; tabindex=&quot;-1&quot;>Roles of the host element</h3>
+      <hr>
+    </header>
+
+  <div class=&quot;row&quot;>
+    <div class=&quot;col-xs-12&quot;>
+      <a11y-custom-button (click)=&quot;onClick()&quot;>Do something...</a11y-custom-button>
+    </div>
+  </div>
+
+  <div class=&quot;row&quot;>
+    <div class=&quot;col-xs-12&quot;>
+      <a11y-value-helper [displayValue]=&quot;generateButtonString()&quot;></a11y-value-helper>
+    </div>
+  </div>
+
+  </section>
+
+</article>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/dev-tools/a11y-dev-tools-index.component.html]" value="<nav role=&quot;navigation&quot;>
+  <ol>
+    <li>
+      <a [routerLink]=&quot;['A11yFails']&quot;><h2>Demo with a11y errors</h2></a>
+    </li>
+    <li>
+      <a [routerLink]=&quot;['A11yPass']&quot;><h2>Demo with full a11y features</h2></a>
+    </li>
+  </ol>
+
+</nav>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/dev-tools/a11y-dev-tools.component.html]" value="<router-outlet></router-outlet>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/dev-tools/a11y-fails/a11y-fails.component.html]" value="<article role=&quot;article&quot;>
+  <header class=&quot;row well&quot;>
+    <h3>Demo with a11y errors</h3>
+  </header>
+
+  <form #demoForm=&quot;ngForm&quot;
+        (ngSubmit)=&quot;submit()&quot;>
+    <div class=&quot;form-group&quot;>
+      <label>Your name:
+        <input #nameInput
+               class=&quot;form-control&quot;
+               ngControl=&quot;name&quot;>
+      </label>
+
+      <label for=&quot;surnamesinput&quot;>
+        Your surname:
+      </label>
+      <input id=&quot;surnameinput&quot;
+             class=&quot;form-control&quot;
+             ngControl=&quot;surname&quot;
+             (blur)=&quot;submitButton.focus()&quot;>
+
+      <label>Tell us why you love Angular:
+        <input class=&quot;form-control&quot;
+               ngControl=&quot;reason&quot;>
+      </label>
+    </div>
+
+    <div #submitMessage
+         class=&quot;alert alert-success&quot;
+         [ngClass]=&quot;{'hide-element' : hideSuccessConfirmation}&quot;>
+      <strong>Hi {{demoForm.value.name}} {{demoForm.value.surname}}!</strong> Your reason for liking Angular 2 is: {{demoForm.value.reason}}.
+      <button type=&quot;button&quot; class=&quot;close&quot;
+              (click)=&quot;nameInput.focus(); hideSuccessConfirmation = true;&quot;>&amp;times;</button>
+    </div>
+
+    <button #submitButton
+            type=&quot;submit&quot;
+            class=&quot;btn btn-primary&quot;>Submit</button>
+
+    <div class=&quot;clearfix&quot;>
+      <a href=&quot;https://www.w3.org/TR/WCAG20/&quot;>
+        <i class=&quot;glyphicon glyphicon-question-sign&quot;></i>
+      </a>
+    </div>
+
+  </form>
+
+</article>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/dev-tools/a11y-pass/a11y-pass.component.html]" value="<article role=&quot;article&quot;>
+  <header class=&quot;row well&quot;>
+    <h2>Demo with full a11y features</h2>
+  </header>
+
+  <form #demoForm=&quot;ngForm&quot;
+        (ngSubmit)=&quot;submit(submitMessage )&quot;>
+    <div class=&quot;form-group&quot;>
+      <label>Your name:
+        <input #nameInput
+               class=&quot;form-control&quot;
+               ngControl=&quot;name&quot;>
+      </label>
+
+      <label>Your surname:
+      <input class=&quot;form-control&quot;
+             ngControl=&quot;surname&quot;>
+      </label>
+
+      <label>Tell us why you love Angular:
+        <input class=&quot;form-control&quot;
+               ngControl=&quot;reason&quot;>
+      </label>
+    </div>
+
+    <div #submitMessage
+         tabindex=&quot;-1&quot;
+         class=&quot;alert alert-success&quot;
+         role=&quot;alert&quot;
+         [attr.aria-hidden]=&quot;hideSuccessConfirmation&quot;
+         [ngClass]=&quot;{'hide-element' : hideSuccessConfirmation}&quot;>
+      <strong>Hi {{demoForm.value.name}} {{demoForm.value.surname}}!</strong> Your reason for liking Angular 2 is: {{demoForm.value.reason}}.
+      <button type=&quot;button&quot; class=&quot;close&quot;
+              (click)=&quot;nameInput.focus(); hideSuccessConfirmation = true;&quot;
+              aria-label=&quot;Close error&quot;>&amp;times;</button>
+    </div>
+
+    <button #submitButton
+            type=&quot;submit&quot;
+            class=&quot;btn btn-primary&quot;>Submit</button>
+
+    <div class=&quot;clearfix&quot;>
+      <a href=&quot;https://www.w3.org/TR/WCAG20/&quot;
+         title=&quot;WCAG specification&quot;
+         aria-label=&quot;Read more about a11y in the WCAG spec.&quot;>
+        <i class=&quot;glyphicon glyphicon-question-sign&quot;></i>
+      </a>
+    </div>
+
+  </form>
+
+</article>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/form-controls/a11y-form-controls.component.html]" value="<nav role=&quot;navigation&quot; class=&quot;skiplink&quot;>
+  <a [href]=&quot;generateSkiplink('#implicit')&quot; >Go directly to implicit labeling</a>
+  <a [href]=&quot;generateSkiplink('#explicit')&quot;>Go directly to explicit labeling</a>
+  <a [href]=&quot;generateSkiplink('#hiding')&quot; >Go directly to hiding labels</a>
+  <a [href]=&quot;generateSkiplink('#custom')&quot; >Go directly to labeling custom controls</a>
+</nav>
+
+<article role=&quot;article&quot;>
+  <header class=&quot;row well&quot;>
+    <h2>Accessible form control labels</h2>
+  </header>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;implicit&quot; tabindex=&quot;-1&quot;>Implicit labeling</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;form-group&quot;>
+      <label>Type something:
+        <input class=&quot;form-control&quot;
+               [(ngModel)]=&quot;inputModel&quot;>
+      </label>
+    </div>
+
+    <a11y-value-helper [displayValue]=&quot;inputModel&quot;></a11y-value-helper>
+
+    <div class=&quot;form-group&quot;>
+      <label>Type some text:
+        <textarea class=&quot;form-control&quot;
+                  [(ngModel)]=&quot;textModel&quot;></textarea>
+      </label>
+    </div>
+
+    <a11y-value-helper [displayValue]=&quot;textModel&quot;></a11y-value-helper>
+
+    <fieldset class=&quot;form-group row&quot;>
+      <legend class=&quot;col-xs-12&quot;>
+        What do you like most about Angular 2?
+      </legend>
+      <div *ngFor=&quot;let checkbox of checkBoxes&quot; class=&quot;checkbox col-xs-12&quot;>
+        <label>
+          <input #checkboxInput type=&quot;checkbox&quot;
+                 [checked]=&quot;isChecked(checkbox.value)&quot;
+                 (click)=&quot;toggleCheckbox(checkboxInput.value)&quot;
+                 [value]=&quot;checkbox.value&quot; [name]=&quot;checkboxName&quot;>
+          {{checkbox.name}}
+        </label>
+      </div>
+    </fieldset>
+
+    <a11y-value-helper [displayValue]=&quot;checkboxModel | json&quot;></a11y-value-helper>
+
+    <fieldset class=&quot;form-group row&quot;>
+      <legend class=&quot;col-xs-12&quot;>
+        Choose your favourite Angular 2 language:
+      </legend>
+      <div *ngFor=&quot;let radiobutton of radioButtons&quot;
+           class=&quot;radio col-xs-12&quot;>
+        <label>
+          <input type=&quot;radio&quot;
+                 [checked]=&quot;radioModel == radiobutton.value&quot;
+                 [value]=&quot;radiobutton.value&quot;
+                 [name]=&quot;'language'&quot;
+                 (click)=&quot;radioModel = radiobutton.value&quot;>
+          {{radiobutton.name}}
+        </label>
+      </div>
+    </fieldset>
+
+    <a11y-value-helper [displayValue]=&quot;radioModel&quot;></a11y-value-helper>
+
+    <div class=&quot;form-group&quot;>
+      <label>Why are you interested in a11y?
+        <select #selectField class=&quot;form-control&quot;
+                [(ngModel)]=&quot;selectModel&quot;>
+          <option *ngFor=&quot;let option of selectOptions&quot;
+                  [value]=&quot;option.value&quot;>
+            {{option.name}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <a11y-value-helper [displayValue]=&quot;selectModel&quot;></a11y-value-helper>
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;explicit&quot; tabindex=&quot;-1&quot;>Explicit labeling</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;form-group&quot;>
+      <label for=&quot;inputexplicit&quot;>
+        Label for input:
+      </label>
+      <input id=&quot;inputexplicit&quot;
+             [(ngModel)]=&quot;inputExplicitModel&quot;
+             class=&quot;form-control&quot;>
+    </div>
+
+    <a11y-value-helper [displayValue]=&quot;inputExplicitModel&quot;></a11y-value-helper>
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;hiding&quot; tabindex=&quot;-1&quot;>Hiding labels</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;form-group&quot;>
+      <label class=&quot;visually-hidden&quot; for=&quot;inputsearch&quot;>
+        Search:
+      </label>
+      <input id=&quot;inputsearch&quot;
+             [(ngModel)]=&quot;searchModel&quot;
+             placeholder=&quot;Search... (Label hidden with style)&quot;
+             class=&quot;form-control&quot;>
+    </div>
+
+    <a11y-value-helper [displayValue]=&quot;searchModel&quot;></a11y-value-helper>
+
+    <div class=&quot;form-group&quot;>
+      <input placeholder=&quot;Filter... (Labeled with aria-label)&quot;
+             [(ngModel)]=&quot;filterModel&quot;
+             aria-label=&quot;Filter:&quot;
+             class=&quot;form-control&quot;>
+    </div>
+
+    <a11y-value-helper [displayValue]=&quot;filterModel&quot;></a11y-value-helper>
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;custom&quot; tabindex=&quot;-1&quot;>Labeling custom controls</h3>
+      <hr>
+    </header>
+
+    <a11y-custom-control [(ngModel)]=&quot;inputDivModel&quot;>
+      Write in this labeled div:
+    </a11y-custom-control>
+
+    <a11y-value-helper [displayValue]=&quot;inputDivModel&quot;></a11y-value-helper>
+
+    <a11y-input-wrapper (onSave)=&quot;onSave()&quot;>
+      <span class=&quot;wrapped-label&quot;>Write in this wrapped input:</span>
+      <input [(ngModel)]=&quot;inputWrappedModel&quot;>
+    </a11y-input-wrapper>
+
+    <a11y-value-helper [displayValue]=&quot;inputWrappedSaveModel&quot;></a11y-value-helper>
+
+  </section>
+
+</article>
+
+
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/form-controls/a11y-input-wrapper.component.html]" value="<div class=&quot;row&quot;>
+  <div class=&quot;form-group col-xs-6&quot;>
+    <label>
+      <ng-content select=&quot;.wrapped-label&quot;></ng-content>
+      <div class=&quot;input-group&quot;>
+        <ng-content select=&quot;input&quot;></ng-content>
+        <div class=&quot;input-group-btn&quot;>
+          <button type=&quot;button&quot;
+                  class=&quot;btn btn-default&quot;
+                  (click)=&quot;save()&quot;>
+            Save
+          </button>
+        </div>
+      </div>
+    </label>
+  </div>
+</div>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/managing-focus/a11y-error-demo.component.html]" value="<div #errorBlock
+     tabindex=&quot;-1&quot;
+     class=&quot;alert alert-danger&quot;
+     role=&quot;alert&quot;
+     [attr.aria-hidden]=&quot;hideErrorConfirmation&quot;
+     [ngClass]=&quot;{'hide-element' : hideErrorConfirmation}&quot;>
+  <strong>Error!</strong> I need to be acknowledged.
+  <button class=&quot;close&quot;
+          (click)=&quot;hideErrorConfirmation = true; errorButton.focus();&quot;
+          aria-label=&quot;Close error&quot;>&amp;times;</button>
+</div>
+<button #errorButton
+        class=&quot;btn btn-primary&quot;
+        (click)=&quot;setFocusOn(errorBlock)&quot;>
+  Show error
+</button>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/managing-focus/a11y-managing-focus.component.html]" value="<nav role=&quot;navigation&quot; class=&quot;skiplink&quot;>
+  <a [href]=&quot;generateSkiplink('#focusoutline')&quot;>Go directly to focus outline</a>
+  <a [href]=&quot;generateSkiplink('#focusflow')&quot;>Go directly to focus flow</a>
+  <a [href]=&quot;generateSkiplink('#customcontrolfocus')&quot;>Go directly to focusing custom controls</a>
+  <a [href]=&quot;generateSkiplink('#internalcomponentfocus')&quot;>Got directly to internal focus in a component</a>
+</nav>
+
+<article role=&quot;article&quot;>
+  <header class=&quot;row well&quot;>
+    <h2>Managing focus</h2>
+  </header>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;focusoutline&quot; tabindex=&quot;-1&quot;>The focus outline</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;form-group&quot;>
+      <label>Focus me for the standard browser outline:
+        <input class=&quot;like-bootstrap&quot;>
+      </label>
+    </div>
+
+    <div class=&quot;form-group&quot;>
+      <label>Focus me for a new and unusual outline:
+        <input class=&quot;form-control custom-outline&quot;>
+      </label>
+    </div>
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;focusflow&quot; tabindex=&quot;-1&quot;>Focus flow</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;row&quot; *ngFor=&quot;let country of countriesWorkedIn&quot;>
+      <div class=&quot;form-group col-xs-6&quot;>
+        <label>Which city of {{country}} did you work in:
+          <input class=&quot;form-control&quot;>
+        </label>
+      </div>
+      <div class=&quot;form-group col-xs-6&quot;>
+        <label>How many months did you work in {{country}}:
+          <input class=&quot;form-control&quot;>
+        </label>
+      </div>
+    </div>
+
+
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;customcontrolfocus&quot; tabindex=&quot;-1&quot;>Focusing custom controls</h3>
+      <hr>
+    </header>
+
+    <div class=&quot;row&quot;>
+      <div class=&quot;col-xs-12&quot;>
+        <a11y-custom-button (click)=&quot;onClick()&quot;>Do something...</a11y-custom-button>
+      </div>
+    </div>
+
+    <div class=&quot;row&quot;>
+      <div class=&quot;col-xs-12&quot;>
+        <a11y-value-helper [displayValue]=&quot;generateButtonString()&quot;></a11y-value-helper>
+      </div>
+    </div>
+  </section>
+
+  <section class=&quot;row well&quot;>
+    <header>
+      <h3 id=&quot;internalcomponentfocus&quot; tabindex=&quot;-1&quot;>Internal focus in a component</h3>
+      <hr>
+    </header>
+
+    <a11y-error-demo></a11y-error-demo>
+  </section>
+
+</article>
+
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/shared/a11y-custom-button.component.html]" value="<ng-content></ng-content>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/shared/a11y-custom-control.component.html]" value="<div class=&quot;row&quot;>
+  <div class=&quot;form-group col-xs-6&quot;>
+    <label [id]=&quot;uniqueId&quot;>
+      <ng-content></ng-content>
+    </label>
+    <div #divTextBox
+         role=&quot;textbox&quot;
+         aria-multiline=&quot;true&quot;
+         [attr.aria-labelledby]=&quot;uniqueId&quot;
+         class=&quot;form-control edit-box&quot;
+         [innerHTML]=&quot;outerValue&quot;
+         (keypress)=&quot;onChange($event, divTextBox.innerHTML)&quot;
+         (blur)=&quot;onBlur()&quot;
+         contenteditable></div>
+  </div>
+</div>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[app/shared/a11y-value-helper.component.html]" value="<span class=&quot;value-label label label-default&quot;
+      aria-live=&quot;polite&quot;
+      aria-atomic=&quot;true&quot;>
+  Current value: {{displayValue}}
+</span>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="files[index.html]" value="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+  <script>document.write('<base href=&quot;' + document.location + '&quot; />');</script>
+  <title>A11y demonstration</title>
+
+  <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+  <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css&quot;>
+  <link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;>
+  <link rel=&quot;stylesheet&quot; href=&quot;a11y.css&quot;>
+
+  <!-- Polyfill(s) for older browsers -->
+  <script src=&quot;https://npmcdn.com/core-js/client/shim.min.js&quot;></script>
+  <script src=&quot;https://npmcdn.com/zone.js@0.6.12?main=browser&quot;></script>
+  <script src=&quot;https://npmcdn.com/reflect-metadata@0.1.3&quot;></script>
+  <script src=&quot;https://npmcdn.com/systemjs@0.19.27/dist/system.src.js&quot;></script>
+  <script src=&quot;systemjs.config.js&quot;></script>
+  <script>
+    System.import('app').catch(function (err) {
+      console.error(err);
+    });
+  </script>
+</head>
+
+<body>
+<app>loading...</app>
+</body>
+
+</html>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->"><input type="hidden" name="tags[0]" value="angular2"><input type="hidden" name="tags[1]" value="example"><input type="hidden" name="tags[2]" value="cookbook"><input type="hidden" name="tags[3]" value="a11y"><input type="hidden" name="private" value="true"><input type="hidden" name="description" value="Angular 2 Example - A11y Cookbook samples"><input type="hidden" name="files[systemjs.config.js]" value="/**
+ * PLUNKER VERSION (based on systemjs.config.js in angular.io)
+ * System configuration for Angular 2 samples
+ * Adjust as necessary for your application needs.
+ */
+(function(global) {
+
+  var ngVer = '@2.0.0-rc.2'; // lock in the angular package version; do not let it float to current!
+  var routerVer = '@3.0.0-alpha.3'; // lock router version
+
+  //map tells the System loader where to look for things
+  var  map = {
+    'app':                        'app',
+
+    '@angular':                   'https://npmcdn.com/@angular', // sufficient if we didn't pin the version
+    '@angular/router':            'https://npmcdn.com/@angular/router' + routerVer,
+    'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
+    'rxjs':                       'https://npmcdn.com/rxjs@5.0.0-beta.6',
+    'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
+    'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+ };
+
+  //packages tells the System loader how to load when no filename and/or no extension
+  var packages = {
+    'app':                        { main: 'main.ts',  defaultExtension: 'ts' },
+    'rxjs':                       { defaultExtension: 'js' },
+    'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+  };
+
+  var ngPackageNames = [
+    'common',
+    'compiler',
+    'core',
+    'http',
+    'platform-browser',
+    'platform-browser-dynamic',
+    'router-deprecated',
+    'upgrade',
+  ];
+
+  // Add map entries for each angular package
+  // only because we're pinning the version with `ngVer`.
+  ngPackageNames.forEach(function(pkgName) {
+    map['@angular/'+pkgName] = 'https://npmcdn.com/@angular/' + pkgName + ngVer;
+  });
+
+  // Add package entries for angular packages
+  ngPackageNames.forEach(function(pkgName) {
+
+    // Bundled (~40 requests):
+    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+
+    // Individual files (~300 requests):
+    //packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
+  });
+
+  // No umd for router yet
+  packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
+
+  var config = {
+    // DEMO ONLY! REAL CODE SHOULD NOT TRANSPILE IN THE BROWSER
+    transpiler: 'ts',
+    typescriptOptions: {
+      tsconfig: true
+    },
+    meta: {
+      'typescript': {
+        &quot;exports&quot;: &quot;ts&quot;
+      }
+    },
+    map: map,
+    packages: packages
+  };
+
+  System.config(config);
+
+})(this);
+
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/"><input type="hidden" name="files[tsconfig.json]" value="{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;module&quot;: &quot;commonjs&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;sourceMap&quot;: true,
+    &quot;emitDecoratorMetadata&quot;: true,
+    &quot;experimentalDecorators&quot;: true,
+    &quot;removeComments&quot;: false,
+    &quot;noImplicitAny&quot;: true,
+    &quot;suppressImplicitAnyIndexErrors&quot;: true
+  }
+}
+"></form><script>document.getElementById("mainForm").submit();</script></body></html>
